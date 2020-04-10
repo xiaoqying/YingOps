@@ -1,1 +1,6 @@
-python
+*.yml linguist-language=Python 
+*.html linguist-language=Python 
+*.js linguist-language=Python 
+*.xml linguist-language=Python
+*.css linguist-language=Python
+*.sh linguist-language=Python
