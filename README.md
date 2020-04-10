@@ -51,7 +51,8 @@ ip:8888
 
 > 感兴趣的同学可以加入我的QQ交流群,代码我也会不断进行更新，感谢大家的支持。
 - QQ群：980731772
-- 一键加入QQ群：<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=e397bb4c6006b7be6f037ef4665be4e7dedcbd50466c5c0ec1991c963ef79419"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="1书院·运维开发交流群" title="1书院·运维开发交流群"></a>
+- 一键加入QQ群：
+<a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=e397bb4c6006b7be6f037ef4665be4e7dedcbd50466c5c0ec1991c963ef79419"><img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="1书院·运维开发交流群" title="1书院·运维开发交流群"></a>
 
 - 扫描二维码加群
 ![](images/QQ群二维码.png)
