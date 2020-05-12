@@ -1,0 +1,247 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}
+    YingOps-仪表盘
+{% endblock %}
+
+{% block dash %}class="active"{% endblock %}
+{% block content %}
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="{% url 'index' %}">首页</a>
+            </li>
+
+        </ul><!-- .breadcrumb -->
+
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+                <span class="input-icon">
+                    <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
+                    <i class="icon-search nav-search-icon"></i>
+                </span>
+            </form>
+        </div><!-- #nav-search -->
+    </div>
+    <div class="page-content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+                <div class="alert alert-block alert-success">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <i class="icon-remove"></i>
+                    </button>
+                    <i class="icon-ok green"></i>
+                    欢迎使用
+                    <strong class="green">
+                        YingOps自动化运维平台
+                        <small>(v1.0 2019.06)</small>
+                        <small>(v2.0 2020.04)</small>
+                    </strong>
+                    定制化开发
+                </div>
+            <div class="col-sm-5">
+                <div class="widget-box">
+                    <div class="widget-header widget-header-flat widget-header-small">
+                        <h5>
+                            <i class="icon-signal"></i>
+                            统计
+                        </h5>
+                    </div>
+                    <div class="widget-body">
+                        <div class="widget-main">
+                            <div id="piechart-placeholder" style="width: 90%; min-height: 150px; padding: 0px; position: relative;">
+                                <canvas class="flot-base" width="577" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 577px; height: 150px;"></canvas>
+                                <canvas class="flot-overlay" width="577" height="150" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 577px; height: 150px;"></canvas>
+                                <div class="legend">
+                                    <div style="position: absolute; width: 95px; height: 110px; top: 15px; right: -30px; background-color: rgb(255, 255, 255); opacity: 0.85;"> </div>
+                                    <table style="position:absolute;top:15px;right:-30px;;font-size:smaller;color:#545454">
+                                        <tbody>
+                                        <tr>
+                                            <td class="legendColorBox">
+                                                <div style="border:1px solid;padding:1px">
+                                                    <div style="width:4px;height:0;border:5px solid #68BC31;overflow:hidden"></div>
+                                                </div>
+                                            </td>
+                                            <td class="legendLabel">linux服务器</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="legendColorBox">
+                                                <div style="border:1px solid;padding:1px">
+                                                    <div style="width:4px;height:0;border:5px solid #2091CF;overflow:hidden"></div>
+                                                </div></td><td class="legendLabel">windows服务器</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="legendColorBox">
+                                                <div style="border:1px solid;padding:1px">
+                                                    <div style="width:4px;height:0;border:5px solid #AF4E96;overflow:hidden"></div>
+                                                </div>
+                                            </td>
+                                            <td class="legendLabel">交换机</td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+
+                            <div class="hr hr8 hr-double"></div>
+
+                            <div class="clearfix">
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="icon-facebook-sign icon-2x blue icon-music"></i>
+                                        &nbsp; <a href="{% url 'assets:assets_list' %}">linux服务器</a>
+                                    </span>
+                                    <h4 class="bigger pull-right">{{ linux_count }}</h4>
+                                </div>
+
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="icon-twitter-sign icon-2x purple"></i>
+                                        &nbsp; <a href="/host/windows/">windows服务器</a>
+                                    </span>
+                                    <h4 class="bigger pull-right">{{ windows_count }}</h4>
+                                </div>
+
+                                <div class="grid3">
+                                    <span class="grey">
+                                        <i class="icon-pinterest-sign icon-2x red"></i>
+                                        &nbsp; <a href="/host/switch/">交换机</a>
+                                    </span>
+                                    <h4 class="bigger pull-right">{{ switch_count }}</h4>
+                                </div>
+                            </div>
+                        </div><!-- /widget-main -->
+                    </div><!-- /widget-body -->
+                </div><!-- /widget-box -->
+            </div>
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div><!-- /.main-content -->
+{% endblock %}
+
+{% block js %}
+<script src="/static/assets/js/flot/jquery.flot.min.js"></script>
+<script src="/static/assets/js/flot/jquery.flot.pie.min.js"></script>
+<!-- ace scripts -->
+<!-- inline scripts related to this page -->
+<script type="text/javascript">
+jQuery(function($) {
+    $('.easy-pie-chart.percentage').each(function(){
+        var $box = $(this).closest('.infobox');
+        var barColor = $(this).data('color') || (!$box.hasClass('infobox-dark') ? $box.css('color') : 'rgba(255,255,255,0.95)');
+        var trackColor = barColor == 'rgba(255,255,255,0.95)' ? 'rgba(255,255,255,0.25)' : '#E2E2E2';
+        var size = parseInt($(this).data('size')) || 50;
+        $(this).easyPieChart({
+            barColor: barColor,
+            trackColor: trackColor,
+            scaleColor: false,
+            lineCap: 'butt',
+            lineWidth: parseInt(size/10),
+            animate: /msie\s*(8|7|6)/.test(navigator.userAgent.toLowerCase()) ? false : 1000,
+            size: size
+        });
+    })
+
+    $('.sparkline').each(function(){
+        var $box = $(this).closest('.infobox');
+        var barColor = !$box.hasClass('infobox-dark') ? $box.css('color') : '#FFF';
+        $(this).sparkline('html', {tagValuesAttribute:'data-values', type: 'bar', barColor: barColor , chartRangeMin:$(this).data('min') || 0} );
+    });
+
+  var placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'150px'});
+  var all_per={{ linux_count }}+{{ windows_count }}+{{ switch_count }}
+  var linux_per={{ linux_count }}/all_per
+  var windows_per={{ windows_count }}/all_per
+  var switch_per={{ switch_count }}/all_per
+
+  var data = [
+    { label: "linux服务器",  data: linux_per, color: "#68BC31"},
+    { label: "windows服务器",  data: windows_per, color: "#2091CF"},
+    { label: "交换机",  data: switch_per, color: "#AF4E96"},
+  ]
+  function drawPieChart(placeholder, data, position) {
+      $.plot(placeholder, data, {
+        series: {
+            pie: {
+                show: true,
+                tilt:0.8,
+                highlight: {
+                    opacity: 0.25
+                },
+                stroke: {
+                    color: '#fff',
+                    width: 2
+                },
+                startAngle: 2
+            }
+        },
+        legend: {
+            show: true,
+            position: position || "ne",
+            labelBoxBorderColor: null,
+            margin:[-30,15]
+        }
+        ,
+        grid: {
+            hoverable: true,
+            clickable: true
+        }
+     })
+ }
+ drawPieChart(placeholder, data);
+
+ /**
+ we saved the drawing function and the data to redraw with different position later when switching to RTL mode dynamically
+ so that's not needed actually.
+ */
+ placeholder.data('chart', data);
+ placeholder.data('draw', drawPieChart);
+
+
+
+  var $tooltip = $("<div class='tooltip top in'><div class='tooltip-inner'></div></div>").hide().appendTo('body');
+  var previousPoint = null;
+
+  placeholder.on('plothover', function (event, pos, item) {
+    if(item) {
+        if (previousPoint != item.seriesIndex) {
+            previousPoint = item.seriesIndex;
+            var tip = item.series['label'] + " : " + item.series['percent']+'%';
+            $tooltip.show().children(0).text(tip);
+        }
+        $tooltip.css({top:pos.pageY + 10, left:pos.pageX + 10});
+    } else {
+        $tooltip.hide();
+        previousPoint = null;
+    }
+
+ });
+
+    var d1 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.5) {
+        d1.push([i, Math.sin(i)]);
+    }
+
+    var d2 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.5) {
+        d2.push([i, Math.cos(i)]);
+    }
+
+    var d3 = [];
+    for (var i = 0; i < Math.PI * 2; i += 0.2) {
+        d3.push([i, Math.tan(i)]);
+    }
+})
+</script>
+{% endblock %}

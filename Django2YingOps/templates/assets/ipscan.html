@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    服务器操作
+{% endblock %}
+{% block fwqopen %}class="active open"{% endblock %}
+{% block ipscan %}class="active"{% endblock %}
+{% block content %}
+
+
+<script type="text/javascript">
+    try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+</script>
+
+
+<div class="main-content">
+    <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="{% url 'index' %}">首页</a>
+            </li>
+
+            <li>
+                <a href="#">服务器操作</a>
+            </li>
+            <li class="active">IP扫描工具</li>
+        </ul><!-- .breadcrumb -->
+    <div class="page-content">
+        <h3 class="header green"> IP扫描工具</h3>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4>IP扫描工具</h4>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main" style="height: 400px;width: 80%">
+                        <form action="{% url 'assets:assets_ipscan' %}" method="post">
+                            {% csrf_token %}
+                             <div class="col-sm-9">
+                                 <label class="col-sm-3 control-label no-padding-right" for="ip"> 扫描指定网段： </label>
+                                 <input type="text" name="ip" placeholder="192.168.5.0/24" class="col-xs-10 col-sm-5">
+                                 <span>例如：192.168.5.0/24</span>
+                            </div>
+
+                            <button type="submit" name="networks" class="btn-primary btn-xs">开始扫描</button>
+
+
+                        </form>
+ <hr>
+
+                         <form action="{% url 'assets:assets_ipscan' %}" method="post">
+                             {% csrf_token %}
+
+                             <div class="col-sm-9">
+                                <label class="col-sm-3 control-label no-padding-right" for="ip"> 扫描指定IP： </label>
+                                <input type="text" name="ip1" placeholder="192.168.5.155" class="col-xs-10 col-sm-5"><span>例如：192.168.5.155</span>
+                            </div>
+                            <button type="submit" name="network" class="btn-primary btn-xs">开始扫描</button>
+                         </form>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="widget-box">
+                    <div class="widget-header">
+                        <h4>返回结果</h4>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main" style="height: 400px;width: 80%;overflow: auto">
+                        {% for online_ip in status %}
+                            {% if 'Online' in  online_ip %}
+                                <div class="icon-circle green">{{ online_ip }} </div>
+                            {% else %}
+                                <div class="icon-circle">{{ online_ip }} </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div></div>
+</div><!-- /.main-container -->
+
+
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        function Dialog(serviceID, frmID)
+        {
+         var val = document.getElementById(serviceID).value;
+         var isok = confirm(val);
+         if(isok){
+      		    document.getElementById(frmID).submit();
+         }
+
+        }
+    </script>
+{% endblock %}

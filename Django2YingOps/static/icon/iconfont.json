@@ -1,0 +1,23 @@
+{
+  "id": "1716185",
+  "name": "ying",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9186714",
+      "name": "QQ",
+      "font_class": "QQ",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
+      "icon_id": "1330569",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e73b",
+      "unicode_decimal": 59195
+    }
+  ]
+}

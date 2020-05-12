@@ -1,0 +1,467 @@
+{% extends 'base.html' %}
+{% block title %}资产详情页{% endblock %}
+{% block zcopen %}class="active open"{% endblock %}
+{% block linuxactive %}class="active"{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <script type="text/javascript">
+            try {
+                ace.settings.check('breadcrumbs', 'fixed')
+            } catch (e) {
+            }
+        </script>
+
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="{% url 'index' %}">首页</a>
+            </li>
+
+            <li>
+                <a href="{% url 'assets:assets_list' %}">linux服务器</a>
+            </li>
+            <li class="active">{{ obj.ip }}</li>
+        </ul><!-- .breadcrumb -->
+
+        <div class="nav-search" id="nav-search">
+            <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input"
+                       autocomplete="off"/>
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+            </form>
+        </div><!-- #nav-search -->
+    </div>
+
+
+    <div class="page-content">
+
+        <div class="row">
+            <div class="col-xs-12">
+                <!-- PAGE CONTENT BEGINS -->
+
+                <div class="tabbable">
+                    <ul class="nav nav-tabs padding-18 tab-size-bigger" id="myTab">
+                        <li class="active">
+                            <a data-toggle="tab" href="#faq-tab-1">
+                                <i class="blue icon-info-sign bigger-120"></i>
+                                基本信息
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" href="#faq-tab-2">
+                                <i class="green icon-bar-chart bigger-120"></i>
+                                性能监控
+                            </a>
+                        </li>
+
+                        <li>
+                            <a data-toggle="tab" href="#faq-tab-3">
+                                <i class="orange icon-desktop bigger-120"></i>
+                                进程列表
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content no-border padding-24">
+
+                        <div id="faq-tab-1" class="tab-pane fade in active">
+                            <h4 class="blue">
+                                <i class="icon-ok bigger-110"></i>
+                                基本信息
+                            </h4>
+
+                            <div class="space-8"></div>
+                            <h4 class="">
+                                <span class="middle">在线情况</span>
+                                <span class="label label-purple arrowed-in-right">
+                                    <i class="icon-circle smaller-80 align-middle green"></i>
+                                    online
+                                    </span>
+                                    <button id="refresh" class="btn-success btn-sm btn" style="float: right" title="更新当前资产信息">
+                                    <i class="icon-refresh bigger-30"></i>更新</button>
+                            </h4>
+
+                            <div class="profile-user-info profile-user-info-striped">
+                                <div class="col-sm-4">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> IP地址：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.ip }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 所在机房：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.computer_room }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 系统当前时间：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.system_time }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 系统运行时间：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.up_time }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 系统版本：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.system_ver }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> MAC地址：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.mac_address }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 序列号：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.sn }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 厂商：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.manufacturer }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> CPU型号：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.cpu_info }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 描述信息：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.desc }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 主机名：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.hostname }}</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> CPU核数：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.cpu_cores }} C</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 总内存：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.mem_total }} G</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 总磁盘：</div>
+                                        <div class="profile-info-value">
+                                            <span class="editable editable-click">{{ obj.disk_total }} GB</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> CPU使用率：</div>
+                                        <div class="profile-info-value">
+                                            <div class="progress progress-striped overview-percentage"
+                                                 style="margin-bottom:0px"
+                                                 data-percent="{{ obj.cpu_status }}%">
+                                                {% if obj.cpu_status > '80' %}
+                                                <div class="progress-bar progress-bar-danger"
+                                                     style="width: {{ obj.cpu_status }}%;"></div>
+                                                {% else %}
+                                                <div class="progress-bar progress-bar-success"
+                                                     style="width: {{ obj.cpu_status }}%;"></div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 内存使用率：</div>
+                                        <div class="profile-info-value">
+                                            <div class="progress progress-striped" style="margin-bottom:0px"
+                                                 data-percent="{{ obj.mem_status }}%">
+                                                {% if obj.mem_status > '80' %}
+                                                <div class="progress-bar progress-bar-danger"
+                                                     style="width: {{ obj.mem_status }}%;"></div>
+                                                {% else %}
+                                                <div class="progress-bar progress-bar-success"
+                                                 style="width: {{ obj.mem_status }}%;"></div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="profile-info-row">
+                                        <div class="profile-info-name"> 磁盘使用率：</div>
+                                        <div class="profile-info-value">
+                                            <div class="progress progress-striped" style="margin-bottom:0px"
+                                                 data-percent="{{ obj.disk_status }}%">
+                                                {% if obj.disk_status > '80' %}
+                                                    <div class="progress-bar progress-bar-danger"
+                                                     style="width: {{ obj.disk_status }}%;"></div>
+                                                {% else %}
+                                                <div class="progress-bar progress-bar-success"
+                                                     style="width: {{ obj.disk_status }}%;"></div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="faq-tab-2" class="tab-pane fade">
+                            <h4 class="blue">
+                                <i class="green icon-user bigger-110"></i>
+                                Account Questions
+                            </h4>
+
+                            <div class="space-8"></div>
+
+                            <div id="faq-list-2" class="panel-group accordion-style1 accordion-style2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-2-1" data-parent="#faq-list-2" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-chevron-right smaller-80"
+                                               data-icon-hide="icon-chevron-down align-top"
+                                               data-icon-show="icon-chevron-right"></i>
+                                            &nbsp;
+                                            Enim eiusmod high life accusamus terry richardson?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-2-1">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-2-2" data-parent="#faq-list-2" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-chevron-right smaller-80"
+                                               data-icon-hide="icon-chevron-down align-top"
+                                               data-icon-show="icon-chevron-right"></i>
+                                            &nbsp;
+                                            Single-origin coffee nulla assumenda shoreditch et?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-2-2">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-2-3" data-parent="#faq-list-2" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-chevron-right middle smaller-80"
+                                               data-icon-hide="icon-chevron-down align-top"
+                                               data-icon-show="icon-chevron-right"></i>
+                                            &nbsp;
+                                            Sunt aliqua put a bird on it squid?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-2-3">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-2-4" data-parent="#faq-list-2" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-chevron-right smaller-80"
+                                               data-icon-hide="icon-chevron-down align-top"
+                                               data-icon-show="icon-chevron-right"></i>
+                                            &nbsp;
+                                            Brunch 3 wolf moon tempor sunt aliqua put?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-2-4">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="faq-tab-3" class="tab-pane fade">
+                            <h4 class="blue">
+                                <i class="orange icon-credit-card bigger-110"></i>
+                                Payment Questions
+                            </h4>
+
+                            <div class="space-8"></div>
+
+                            <div id="faq-list-3" class="panel-group accordion-style1 accordion-style2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-3-1" data-parent="#faq-list-3" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-plus smaller-80" data-icon-hide="icon-minus"
+                                               data-icon-show="icon-plus"></i>
+                                            &nbsp;
+                                            Enim eiusmod high life accusamus terry richardson?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-3-1">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-3-2" data-parent="#faq-list-3" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-plus smaller-80" data-icon-hide="icon-minus"
+                                               data-icon-show="icon-plus"></i>
+                                            &nbsp;
+                                            Single-origin coffee nulla assumenda shoreditch et?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-3-2">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-3-3" data-parent="#faq-list-3" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-plus smaller-80" data-icon-hide="icon-minus"
+                                               data-icon-show="icon-plus"></i>
+                                            &nbsp;
+                                            Sunt aliqua put a bird on it squid?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-3-3">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <a href="#faq-3-4" data-parent="#faq-list-3" data-toggle="collapse"
+                                           class="accordion-toggle collapsed">
+                                            <i class="icon-plus smaller-80" data-icon-hide="icon-minus"
+                                               data-icon-show="icon-plus"></i>
+                                            &nbsp;
+                                            Brunch 3 wolf moon tempor sunt aliqua put?
+                                        </a>
+                                    </div>
+
+                                    <div class="panel-collapse collapse" id="faq-3-4">
+                                        <div class="panel-body">
+                                            Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+                                            terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+                                            skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+                                            Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
+                                            single-origin coffee nulla assumenda shoreditch et.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- PAGE CONTENT ENDS -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.page-content -->
+</div><!-- /.main-content -->
+{% endblock %}
+{% block js %}
+<script>
+    $("#refresh").click(function () {
+        $.ajax({
+            url: '{% url 'assets:assets_live_status' %}',
+            data: {'ip':'{{ obj.ip }}'},
+            method: 'GET',
+            success:function (data) {
+                alert(data)
+                location.reload()
+            }
+        })
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    YingOps-webssh
+{% endblock %}
+
+{% block fwqopen %}class="active open"{% endblock %}
+{% block websshactive %}class="active"{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        <!-- 导航标签及顶部搜索功能 -->
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home home-icon"></i>
+                    <a href="{% url 'index' %}">首页</a>
+                </li>
+
+                <li>
+                    <a href="#">资产信息</a>
+                </li>
+                <li class="active">WebSsh</li>
+            </ul><!-- .breadcrumb -->
+
+        </div>
+        <iframe src="{{ url }}{{ hostname }}" width="1200" height="800"></iframe>
+        <form action="{% url 'assets:assets_webssh' %}" method="post">
+            <button class="btn-primary btn-sm" name="startwebssh" type="submit">启动webssh</button>
+
+            <button class="btn-primary btn-sm" name="stopwebssh" type="submit">停止webssh</button>
+
+        </form>
+    </div>
+
+{% endblock %}

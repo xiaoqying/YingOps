@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    资产信息-IBM服务器状态
+{% endblock %}
+{% block zcopen %}class="active open"{% endblock %}
+{% block ibmsactive %}class="active"{% endblock %}
+{% block content %}
+    <div class="main-content">
+        <ul class="breadcrumb">
+            <li>
+                <i class="icon-home home-icon"></i>
+                <a href="{% url 'index' %}">首页</a>
+            </li>
+
+            <li>
+                <a href="#">资产信息</a>
+            </li>
+            <li class="active">IBM服务器状态</li>
+        </ul><!-- .breadcrumb -->
+
+        <div class="page-content">
+            <div class="page-header">
+                <button id="ibm_status_update" class="btn btn-app btn-primary icon-refresh ibm_status_update">更新数据</button>
+            </div>
+        {% load  my_filter %}
+        <div class="row">
+            {% for i in obj %}
+                <div class="col-xs-12 col-sm-2" >
+                    <div class="widget-box ">
+                        <div class="widget-header">
+                            {% if i.System == 'Normal'  and i.Disks == 'Normal'  and i.Processors == 'Normal'  and i.Memory == 'Normal'  and i.Power_Modules == 'Normal'    and i.Cooling_Devices == 'Normal'    and i.Adapters == 'Normal'  %}
+                                <h4 style="color: #2e8965"><a href="https://{{ i.ip }}" target="_blank">{{ i.ip }}</a></h4>
+                            {% else %}
+                                <h4 style="color: red"><a href="https://{{ i.ip }}" target="_blank">{{ i.ip }}</a></h4>
+                            {% endif %}
+                        </div>
+                        <div class="widget-body">
+                            <div class="widget-main">
+                                <div class="" id="navbar">
+                                    <div style="height: 170px;">
+                                        <div>处理器: <span >{{ i.Processors|replace_str }}</span></div>
+                                        <div>磁盘: <span>{{ i.Disks|replace_str }}</span></div>
+                                        <div>系统: <span>{{ i.System|replace_str }}</span></div>
+                                        <div>内存: <span>{{ i.Memory|replace_str }}</span></div>
+                                        <div>电源: <span>{{ i.Power_Modules|replace_str }}</span></div>
+                                        <div>风扇: <span>{{ i.Cooling_Devices|replace_str }}</span></div>
+                                        <div>适配器: <span>{{ i.Adapters|replace_str }}</span></div>
+                                        <div>更新时间: <span>{{ i.date_time }}</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block js %}
+    <script src="/static/assets/js/bootstrap.min.js"></script>
+    <script src="/static/assets/js/typeahead-bs2.min.js"></script>
+    <script src="/static/assets/js/chosen.jquery.min.js"></script>
+    <script src="/static/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/static/assets/js/jquery.autosize.min.js"></script>
+    <script src="/static/assets/js/jquery.inputlimiter.1.3.1.min.js"></script>
+    <script src="/static/assets/js/jquery.maskedinput.min.js"></script>
+    <script>
+    $('.ibm_status_update').click(function () {
+        var isok = confirm('即将是更新....大约需要20秒，请耐心等候！')
+        if (isok){
+            $.ajax({
+            url: '{% url 'assets:ibm_status' %}',
+            data: {'localpost':'localpost'},
+            type: 'POST',
+            success: function (data) {
+                 if (data == 'updateok') {
+                    //alert('更新成功!');
+                    //location.reload(true);
+                    window.location.reload();
+                } else {
+                    alert('更新失败!')
+                }
+            }
+        })
+        }
+
+    })
+    </script>
+{##}
+{% endblock %}

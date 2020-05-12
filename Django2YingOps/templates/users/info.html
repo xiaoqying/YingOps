@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}用户信息页面{% endblock %}
+{% block css %}{% endblock %}
+{% block content %}
+    <div class="main-content">
+        <div class="page-content">
+            <div class="row col-xs-12">
+                <div class="col-sm-3 center">
+                    <div class="space space-4"></div>
+                    <form class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off"
+                          method="post" action="" target='frameFile'>
+                        <label class="changearea" for="avatarUp">
+                            <span id="avatardiv" class="pic">
+                                <img width="300" height="300" class="js-img-show" id="avatarShow"
+                                     src="{{ MEDIA_URL }}{{ request.user.image }}"/>
+                            </span>
+{#                            <span class="fl upload-inp-box" style="margin-left:70px;">#}
+{#                                <span class="btn btn-primary" id="jsAvatarBtn">修改头像</span>#}
+{#                                <input type="file" name="image" id="avatarUp" class="js-img-up" style="display: none"/>#}
+{#                            </span>#}
+                        </label>
+                        {% csrf_token %}
+                    </form>
+                </div><!-- /span -->
+                <div class="col-sm-9">
+                    <h4 class="blue">
+                        <span class="middle">{{ request.user.username }}</span>
+
+                        <span class="label label-purple arrowed-in-right">
+                            <i class="icon-circle smaller-80 align-middle"></i>
+                            online
+                        </span>
+                    </h4>
+
+                    <div class="profile-user-info">
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 用户名</div>
+
+                            <div class="profile-info-value">
+                                <span>{{ request.user.username }}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 性别</div>
+
+                            <div class="profile-info-value">
+                                <span>{% if request.user.gender == 'male' %}男{% else %}女{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 生日</div>
+
+                            <div class="profile-info-value">
+                                <span>{{ request.user.birthday }}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 手机号</div>
+
+                            <div class="profile-info-value">
+                                <span>{{ request.user.phone }}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 邮箱</div>
+
+                            <div class="profile-info-value">
+                                <span>{{ request.user.email }}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 是否管理员</div>
+
+                            <div class="profile-info-value">
+                                <span>{% if request.user.is_superuser|stringformat:'i' == '1' %}是 <a href="/xadmin">后台管理</a>{% else %}
+                                    否{% endif %}</span>
+                            </div>
+                        </div>
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 上次登录</div>
+
+                            <div class="profile-info-value">
+                                <span>{{ request.user.last_login }}</span>
+                            </div>
+                        </div>
+{#                        <div class="profile-info-row">#}
+{#                            <div class="profile-info-name"> 注册时间</div>#}
+{##}
+{#                            <div class="profile-info-value">#}
+{#                                <span>{{ request.user.date_joined }}</span>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="profile-info-row">
+                            <div class="profile-info-name"> 密码</div>
+
+                            <div class="profile-info-value" >
+                                <button class="btn btn-sm" id="modify">修改密码</button>
+                                <span style="color:red">{{modifypwd_form.errors}}{{ msg }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hr hr-8 dotted"></div>
+
+                    <div id="modify_password" class="widget-box hidden">
+                        <div class="widget-header">
+                            <h4>修改密码</h4>
+                        </div>
+                        <div class="widget-body" >
+                            <div class="widget-main">
+                                <form class="form-inline" method="post" action="{% url 'users:user_modifypwd' %}">
+                                    <label>密码：</label>
+                                    <input type="password" class="input-large" placeholder="Password1" name="password1" required>
+                                    <label>确认密码：</label>
+                                    <input type="password" class="input-large" placeholder="Password2" name="password2" required>
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="icon-key bigger-110"></i>
+                                        确认修改
+                                    </button>
+                                    {% csrf_token %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        {#显示和隐藏修改密码框#}
+        $("#modify").click(function () {
+            if($("#modify_password").hasClass('hidden')){
+                $("#modify_password").removeClass('hidden')
+            }else{
+                $("#modify_password").addClass('hidden')
+            };
+        })
+    </script>
+{% endblock %}

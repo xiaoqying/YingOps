@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    YingOps-初始化资产
+{% endblock %}
+
+{% block zcopen %}class="active open"{% endblock %}
+{% block initactive %}class="active"{% endblock %}
+
+{% block content %}
+    <div class="main-content">
+        <div class="breadcrumbs" id="breadcrumbs">
+            <script type="text/javascript">
+                try {
+                    ace.settings.check('breadcrumbs', 'fixed')
+                } catch (e) {
+                }
+            </script>
+
+            <ul class="breadcrumb">
+                <li>
+                    <i class="icon-home home-icon"></i>
+                    <a href="{% url 'index' %}">首页</a>
+                </li>
+
+                <li class="active">初始化资产</li>
+            </ul><!-- .breadcrumb -->
+
+            <div class="nav-search" id="nav-search">
+                <form class="form-search">
+            <span class="input-icon">
+                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input"
+                       autocomplete="off">
+                <i class="icon-search nav-search-icon"></i>
+            </span>
+                </form>
+            </div><!-- #nav-search -->
+        </div>
+        <div class="col-sm-5">
+            <div class="widget-box">
+                <div class="widget-header">
+                    <h4>第一次初始化扫描/新增资产信息</h4>
+                </div>
+
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <form action="{% url 'assets:assets_init' %}" method="post">
+                            <!-- <legend>Form</legend> -->
+                            <fieldset>
+                                <div >网段: <span style="color: red">*支持以下方式 192.168.0.0/24或192.168.0.1或192.168.0.1-10</span></div>
+                                <input type="text" name="nets"  placeholder="192.168.0.0/24" required>
+                            </fieldset>
+                            <fieldset>
+                                <div>用户名: <span style="color: red">*登录系统的用户名如：root</span></div>
+                                <input type="text" name="user_list" placeholder="Type something…" value="root" required>
+                            </fieldset>
+                            <fieldset>
+{#                                <div>端口: <span style="color: red">*ssh端口号如：22，多个端口号，以；分隔符（不区分中英文符号）</span></div>#}
+                                <div>端口: <span style="color: red">*ssh端口号：仅支持22号端口</span></div>
+                                <input type="text" name="port_list" placeholder="请输入ssh端口号" value="22" required >
+                            </fieldset>
+                            <fieldset>
+                                <div>密码: <span style="color: red">*可以输入多个密码，以；作为分隔符（不区分中英文符号）,建议提前写好复制进来</span></div>
+                                <input id="passwd_list" type="password" name="passwd_list" placeholder="请输入密码" required>
+                                <span id="look" class="glyphicon glyphicon-eye-open" title="点击显示/隐藏密码"></span>
+                            </fieldset>
+                            <div class="form-actions center">
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    开始执行
+                                    <i class="icon-arrow-right icon-on-right bigger-110"></i>
+                                </button>
+                                <span style="color: red">{{ msg }}</span>
+
+                            </div>
+                            {% csrf_token %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    //显示或隐藏密码
+    $('#look').click(function () {
+        var type = $('#passwd_list').attr("type");
+        if (type == "text") {
+            $('#passwd_list').attr("type", "password");
+            //attr：设置或返回被选元素的属性值。
+            $(".look").children(".glyphicon").toggleClass("glyphicon-eye-open");
+            $(".look").children(".glyphicon").toggleClass("glyphicon-eye-close");
+            //toggleClass：如果存在（不存在）就删除（添加）一个类。
+        } else {
+            $('#passwd_list').attr("type", "text");
+            $(".glyphicon").toggleClass("glyphicon-eye-open");
+            $(".glyphicon").toggleClass("glyphicon-eye-close");
+        }
+    })
+</script>
+{% endblock %}
