@@ -1,6 +1,11 @@
+
 ---
-Github把django2.1.18给和谐了，requirements.txt里面改成了2.2.10，如果使用有问题的话，就换成2.1.18吧
+Github把django==2.1.8给和谐了，requirements.txt里面改成了django==2.2.10，
+如果使用有问题的话，就换成2.1.8吧，我记得用2.2.10的时候有个BUG，忘记是什么了...
+
 ---
+
+
 ## 安装环境
 - 1.需要一个python3.6.5的环境
 ```python
