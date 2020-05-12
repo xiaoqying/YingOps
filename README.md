@@ -44,8 +44,8 @@ ip:8888
 ![](images/webssh.png)
 
 ### 暂不提供demo预览
-[博客地址](http://blog.xiaoqying.com)
-
+[博客地址1](http://blog.xiaoqying.com)
+[博客地址2](http://bk.xiaoqying.com)
 ### QQ交流群  
 
 
