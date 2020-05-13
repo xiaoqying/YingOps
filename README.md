@@ -1,5 +1,6 @@
 # yingops
-
+[查看代码-码云](https://gitee.com/xiaoqying/yingops)
+[查看代码-Github](https://github.com/xiaoqying/YingOps)
 ### 介绍
 使用python3.6 + django2.1.8开发的自动化运维平台；
 可以一键生成CMDB资产信息，支持导入导出功能，通过Ansible，SaltStack来管理主机，集成webssh等
