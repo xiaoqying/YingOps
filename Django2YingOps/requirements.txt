@@ -37,7 +37,7 @@ six==1.14.0
 sqlparse==0.3.1
 tablib==1.1.0
 tornado==6.0.4
-urllib3==1.25.9
+urllib3==1.26.5
 webssh==1.5.2
 xlrd==1.2.0
 XlsxWriter==1.2.8
