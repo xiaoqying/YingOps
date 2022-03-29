@@ -19,7 +19,7 @@ MarkupPy==1.14
 mysqlclient==1.4.6
 odfpy==1.4.1
 openpyxl==3.0.3
-paramiko==2.7.1
+paramiko==2.10.1
 Pillow==7.0.0
 ply==3.11
 pyasn1==0.4.8
